@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edge Detection Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Gambar untuk Edge Detection</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="/" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".png,.jpg,.jpeg">
+            <button type="submit">Upload</button>
+        </form>
+
+        {% if original %}
+        <div class="image-container">
+            <div class="image-section">
+                <h2>Gambar Asli:</h2>
+                <img src="{{ url_for('static', filename='upload/' + original) }}" alt="Gambar Asli">
+            </div>
+
+            <div class="image-section">
+                <h2>Hasil Deteksi Tepi:</h2>
+                <img src="{{ url_for('static', filename='upload/' + processed) }}" alt="Hasil Deteksi Tepi">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
